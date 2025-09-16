@@ -27,7 +27,22 @@ const io = socketIo(server, {
   }
 });
 
-app.use(cors());
+// Update CORS configuration
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'https://webscoketscalablefrontend.vercel.app',  // Your Vercel frontend
+    'https://web-scoketscalable.onrender.com'        // Your Render backend
+  ],
+  credentials: true,
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+// Also update Socket.io CORS (find this section)
+// (Removed duplicate io declaration to prevent redeclaration error)
+
 app.use(express.json({ limit: '10mb' }));
 
 // Serve frontend files
